@@ -1,104 +1,236 @@
 <template>
-    <div class="bg-gray-100 min-h-screen"> <!-- Background color -->
-        <header class="bg-blue-600 flex justify-between items-center p-4 shadow-md"> <!-- Header background -->
-            <div class="flex lg:flex-1 items-center">
-                <a href="/dashboard" class="text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition duration-200">Back</a>
-                <h1 class="text-3xl text-white font-bold mx-auto">Simulation</h1>
-            </div>
-            <nav class="flex items-center justify-end">
-                <a href="/" class="text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition duration-200">Home</a>
-            </nav>
-        </header>
-
-        <div class="relative isolate px-6 pt-4 lg:px-8"> <!-- Reduced pt-10 to pt-4 -->
-            <div class="max-w-2xl sm:py-4 lg:py-4"> <!-- Reduced py values to py-4 -->
-                <div class="text-end ">
-                    <p class="mt-2 text-lg text-gray-800"> <!-- Reduced mt-6 to mt-2 -->
-                        <span class="inline-block p-4 bg-blue-500 text-white rounded-lg shadow-lg">
-                            This is the simulation page where you begin testing your system.
-                        </span>
-                    </p>
-
-                    <!-- New Heading for Sliders -->
-                    <h2 class="mt-6 text-2xl font-bold text-gray-900 text-left">Control Parameters</h2> <!-- Reduced mt-10 to mt-6 -->
-
-                    <!-- Outer Square -->
-                    <div class="mt-4 p-6 rounded-lg bg-white shadow-lg border border-blue-400 max-w-md"> 
-                        <div class="flex flex-col items-start"> 
-                            <!-- Frequency Label Square -->
-                            <div class="p-4 mb-4 border border-blue-400 rounded-lg bg-gray-200 w-full"> 
-                                <label class="block text-base font-semibold leading-7 text-gray-900">Frequency (Hz)</label>
-                            </div>
-
-                            <!-- Slider for Frequency -->
-                            <div class="p-4 border border-blue-400 rounded-lg bg-gray-200 w-full"> 
-                                <input type="range" min="0" max="100" v-model="sliderValueFrequency" step="10" class="slider" aria-label="Frequency slider" />
-                                <span class="text-blue-500">{{ sliderValueFrequency }} Hz</span>
-                            </div>
-
-                            <!-- Acceleration Label Square -->
-                            <div class="p-4 mb-4 mt-8 border border-blue-400 rounded-lg bg-gray-200 w-full"> 
-                                <label class="block text-base font-semibold leading-7 text-gray-900">Acceleration (m/s²)</label>
-                            </div>
-
-                            <!-- Slider for Acceleration -->
-                            <div class="p-4 border border-blue-400 rounded-lg bg-gray-200 w-full"> 
-                                <input type="range" min="0" max="100" v-model="sliderValueAcceleration" step="10" class="slider" aria-label="Acceleration slider" />
-                                <span class="text-blue-500">{{ sliderValueAcceleration }} m/s²</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen"> <!-- Light gradient background -->
+      <header class="bg-blue-700 flex justify-between items-center p-6 shadow-lg"> <!-- Darker header -->
+        <div class="flex items-center">
+          <a href="/dashboard" class="text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Back</a>
+          <h1 class="text-3xl text-white font-bold mx-auto">Simulation</h1>
         </div>
+        <nav class="flex items-center">
+          <a href="/" class="text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Home</a>
+        </nav>
+      </header>
+  
+      <div class="relative isolate px-6 pt-4 lg:px-8">
+        <div class="max-w-5xl mx-auto sm:py-4 flex flex-col lg:flex-row"> <!-- Centered container -->
+          <div class="flex-1"> <!-- Left side for control parameters -->
+            <div class="text-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-900">Control Parameters</h2>
+              <p class="mt-2 text-lg text-gray-700">
+                Adjust the parameters for your simulation below.
+              </p>
+            </div>
+  
+            <!-- Outer Card -->
+            <div class="p-8 rounded-xl bg-white shadow-xl border border-gray-300 transition-transform transform hover:scale-105"> <!-- Enhanced card style -->
+              <div class="space-y-6">
+  
+                <!-- Frequency Control -->
+                <div>
+                  <label class="block text-base font-semibold text-gray-900">Frequency (Hz)</label>
+                  <input type="range" min="0" max="100" v-model="sliderValueFrequency" step="10" class="slider w-full mt-2" />
+                  <span class="text-blue-600 font-semibold">{{ sliderValueFrequency }} Hz</span>
+                </div>
+  
+                <!-- Acceleration Control -->
+                <div>
+                  <label class="block text-base font-semibold text-gray-900">Acceleration (m/s²)</label>
+                  <input type="range" min="0" max="100" v-model="sliderValueAcceleration" step="10" class="slider w-full mt-2" />
+                  <span class="text-blue-600 font-semibold">{{ sliderValueAcceleration }} m/s²</span>
+                </div>
+  
+                <!-- Duration Control -->
+                <div>
+                  <label class="block text-base font-semibold text-gray-900">Duration</label>
+                  <div class="flex space-x-4 mb-4 mt-2">
+                    <div class="flex flex-col w-1/3">
+                      <label class="text-center text-gray-700">Hours</label>
+                      <input type="number" v-model="durationHours" min="0" placeholder="HH" class="p-3 border border-gray-300 rounded-lg text-center focus:ring focus:ring-blue-500 transition" />
+                    </div>
+                    <div class="flex flex-col w-1/3">
+                      <label class="text-center text-gray-700">Minutes</label>
+                      <input type="number" v-model="durationMinutes" min="0" max="59" placeholder="MM" class="p-3 border border-gray-300 rounded-lg text-center focus:ring focus:ring-blue-500 transition" />
+                    </div>
+                    <div class="flex flex-col w-1/3">
+                      <label class="text-center text-gray-700">Seconds</label>
+                      <input type="number" v-model="durationSeconds" min="0" max="59" placeholder="SS" class="p-3 border border-gray-300 rounded-lg text-center focus:ring focus:ring-blue-500 transition" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Start Simulation Button -->
+              <div class="text-center mt-6">
+                <button @click="startSimulation" class="bg-blue-700 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200 font-semibold shadow-md">
+                  Start Simulation
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Waveform and Pie Chart Display Section on the Right Side -->
+          <div class="mt-8 lg:mt-0 lg:ml-8 max-w-md w-full"> <!-- Add margin-top for mobile spacing -->
+            <div class="mb-8"> <!-- Waveform Display Card -->
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">Waveform Display</h2>
+              <canvas ref="waveformCanvas" class="border border-gray-300 w-full h-40 rounded-lg shadow-sm"></canvas>
+            </div>
+  
+            <div> <!-- Countdown Pie Chart Card -->
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">Countdown Timer</h2>
+              <canvas ref="pieChartCanvas" class="border border-gray-300 w-full h-40 rounded-lg shadow-sm"></canvas>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Frequency and Acceleration Readings Overlay -->
+      </div>
     </div>
-</template>
-
-<script>
-export default {
+  </template>
+  
+  <script>
+  export default {
     data() {
-        return {
-            sliderValueFrequency: 50, // Initial value for the frequency slider
-            sliderValueAcceleration: 50 // Initial value for the acceleration slider
-        };
-    }
-}
-</script>
-
-<style scoped>
-/* Global Styles */
-body {
-    font-family: 'Roboto', sans-serif; /* Clean font */
-}
-
-/* Background color for the page */
-.bg-gray-100 {
-    background-color: #f7fafc; /* Light gray color for background */
-}
-
-/* Slider styles */
-.slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px; /* Increased height for better visibility */
-    background: #3b82f6; /* Inactive track color */
-    border-radius: 5px;
-}
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 24px; /* Adjust thumb width */
-    height: 24px; /* Adjust thumb height */
-    background: #1d4ed8; /* Thumb color */
-    border-radius: 50%; /* Round thumb */
-    box-shadow: 0 0 2px rgba(0,0,0,0.5); /* Shadow for thumb */
-}
-.slider::-moz-range-thumb {
-    width: 24px; /* Adjust thumb width */
-    height: 24px; /* Adjust thumb height */
-    background: #1d4ed8; /* Thumb color */
-    border-radius: 50%; /* Round thumb */
-    box-shadow: 0 0 2px rgba(0,0,0,0.5); /* Shadow for thumb */
-}
-</style>
+      return {
+        sliderValueFrequency: 50, // Initial value for the frequency slider
+        sliderValueAcceleration: 50, // Initial value for the acceleration slider
+        durationHours: 0, // Initial value for hours
+        durationMinutes: 0, // Initial value for minutes
+        durationSeconds: 0, // Initial value for seconds
+        timer: null, // Timer reference
+        totalTime: 0, // Total time in seconds
+        elapsedTime: 0, // Elapsed time in seconds
+      };
+    },
+    computed: {
+      formattedTime() {
+        const remainingTime = this.totalTime - this.elapsedTime;
+        const hours = Math.floor(remainingTime / 3600);
+        const minutes = Math.floor((remainingTime % 3600) / 60);
+        const seconds = remainingTime % 60;
+        return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`; // Format as HH:MM:SS
+      },
+    },
+    mounted() {
+      this.drawWaveform();
+      this.drawPieChart();
+    },
+    watch: {
+      sliderValueFrequency() {
+        this.drawWaveform();
+      },
+      sliderValueAcceleration() {
+        this.drawWaveform();
+      },
+    },
+    methods: {
+      startSimulation() {
+        this.elapsedTime = 0;
+        this.totalTime = this.durationHours * 3600 + this.durationMinutes * 60 + this.durationSeconds;
+        this.timer = setInterval(this.updateTimer, 1000);
+        console.log(`Starting simulation with Frequency: ${this.sliderValueFrequency} Hz, Acceleration: ${this.sliderValueAcceleration} m/s², Duration: ${this.totalTime} seconds.`);
+      },
+      updateTimer() {
+        if (this.elapsedTime < this.totalTime) {
+          this.elapsedTime++;
+          this.drawPieChart();
+        } else {
+          clearInterval(this.timer);
+          this.timer = null;
+          alert("Time's up!");
+        }
+      },
+      drawWaveform() {
+        const canvas = this.$refs.waveformCanvas;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        ctx.clearRect(0, 0, width, height); // Clear the canvas
+  
+        const frequency = this.sliderValueFrequency;
+        const acceleration = this.sliderValueAcceleration;
+  
+        // Draw waveform
+        ctx.beginPath();
+        for (let x = 0; x < width; x++) {
+          const y = height / 2 + Math.sin((x / width) * frequency * Math.PI * 2) * (acceleration / 2);
+          ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = '#1d4ed8'; // Waveform color
+        ctx.lineWidth = 2;
+        ctx.stroke();
+  
+        // Draw overlay readings on the waveform
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'; // White background for text
+        ctx.fillRect(10, 10, 200, 60); // Rectangle background
+        ctx.fillStyle = '#1d4ed8'; // Text color
+        ctx.font = '16px Arial';
+        ctx.fillText(`Frequency: ${frequency} Hz`, 20, 30);
+        ctx.fillText(`Accel: ${acceleration} m/s²`, 20, 50);
+      },
+      drawPieChart() {
+        const canvas = this.$refs.pieChartCanvas;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const radius = Math.min(width, height) / 2;
+        ctx.clearRect(0, 0, width, height); // Clear the canvas
+  
+        // Draw the elapsed time as a pie chart
+        const totalTime = this.totalTime;
+        const elapsedTime = this.elapsedTime;
+        const startAngle = -Math.PI / 2;
+  
+        // Draw the elapsed time
+        ctx.beginPath();
+        ctx.arc(width / 2, height / 2, radius, startAngle, startAngle + (Math.PI * 2 * elapsedTime) / totalTime);
+        ctx.lineTo(width / 2, height / 2);
+        ctx.closePath();
+        ctx.fillStyle = '#1d4ed8'; // Pie chart color
+        ctx.fill();
+  
+        // Draw the remaining time
+        ctx.beginPath();
+        ctx.arc(width / 2, height / 2, radius, startAngle + (Math.PI * 2 * elapsedTime) / totalTime, startAngle + Math.PI * 2);
+        ctx.lineTo(width / 2, height / 2);
+        ctx.closePath();
+        ctx.fillStyle = '#e5e7eb'; // Remaining time color
+        ctx.fill();
+  
+        // Draw text in the center
+        ctx.fillStyle = '#1d4ed8'; // Text color
+        ctx.font = '24px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.formattedTime, width / 2, height / 2);
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .slider {
+      -webkit-appearance: none;
+      height: 6px;
+      background: #ddd;
+      border-radius: 5px;
+      outline: none;
+  }
+  
+  .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #1d4ed8;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #1d4ed8;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+  </style>
+  

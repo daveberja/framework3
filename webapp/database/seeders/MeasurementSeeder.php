@@ -11,12 +11,12 @@ class MeasurementSeeder extends Seeder
     {
         // Create an array of data to insert
         $measurements = [];
-        for ($i = 0; $i < 50; $i++) { // Change 50 to the number of entries you want
+        for ($i = 0; $i < 50; $i++) { // Adjust the number of entries as needed
             $measurements[] = [
                 'amplitude' => rand(1, 100), // Random amplitude between 1 and 100
                 'frequency' => rand(1, 1000), // Random frequency between 1 and 1000
                 'acceleration' => rand(1, 500), // Random acceleration between 1 and 500
-                'duration' => rand(1, 60), // Random duration between 1 and 60 seconds
+                'duration' => rand(36000, 86400), // Random duration between 10 and 24 hours in seconds
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

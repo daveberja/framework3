@@ -123,10 +123,13 @@ export default {
             // Logic to use the selected simulation
         },
         formatDuration(duration) {
-            const seconds = Math.floor(duration / 1000);
-            const minutes = Math.floor(seconds / 60);
-            return `${minutes} minutes ${seconds % 60} seconds`;
-        },
+        const totalSeconds = Math.floor(duration);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return `${hours} hours ${minutes} minutes ${seconds} seconds`;
+    },
         retrieveSimulation(deleted) {
             this.pastSimulations.push(deleted);
             this.deletedSimulations = this.deletedSimulations.filter(sim => sim.id !== deleted.id);
