@@ -1,69 +1,77 @@
 <template>
-    <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-30 bg-gradient-to-r from-blue-600 to-blue-400 flex justify-between items-center p-4 shadow-lg">
-        <div class="flex lg:flex-1">
-          <h1 class="text-4xl sm:text-6xl tracking-tight text-white ml-4 font-extrabold">
-            Testing Dashboard
-          </h1>
+  <div class="bg-black min-h-screen text-white">
+    <nav class="bg-gray-900 text-green-400 p-4 shadow-lg">
+      <div class="container mx-auto flex justify-between">
+        <h1 class="text-3xl font-semibold text-steins-green">Vibration Simulation Dashboard</h1>
+        <div>
+          <a href="/" class="px-6 py-2 text-white bg-steins-green rounded-full hover:bg-green-600 hover:text-black shadow-lg transition ease-in-out duration-300">
+            Home
+          </a>
+          <a href="/reports" class="px-6 py-2 text-white bg-steins-green rounded-full hover:bg-green-600 hover:text-black shadow-lg transition ease-in-out duration-300">
+            Reports
+          </a>
+          <a href="/dashboard" class="px-6 py-2 text-white bg-steins-green rounded-full hover:bg-green-600 hover:text-black shadow-lg transition ease-in-out duration-300">
+            Settings
+          </a>
         </div>
-        <nav class="flex items-center justify-end" aria-label="Global">
-          <div class="text-right mr-4">
-            <a href="/" class="block rounded-lg px-4 py-2 text-base font-semibold leading-7 text-white bg-blue-800 hover:bg-blue-700 transition duration-200 shadow-md">
-              Home
-            </a>
-          </div>
-        </nav>
-      </header>
-  
-      <main class="relative isolate px-6 pt-24 lg:px-8">
-        <div class="mx-auto max-w-5xl py-32 sm:py-48 lg:py-56">
-          <div class="text-center">
-            <p class="mt-6 text-lg text-gray-800">
-              <span class="inline-block p-4 bg-blue-500 text-white rounded-lg shadow-lg">
-                Get started on your testing
-              </span>
-            </p>
-  
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
-              <a href="/simulation" class="block rounded-lg p-6 text-lg font-semibold leading-7 text-white bg-blue-400 hover:bg-blue-500 transition duration-200 shadow-md transform hover:scale-105">
-                <h3 class="text-2xl">Simulation</h3>
-                <p class="mt-2 text-gray-100">Run and analyze your tests in real-time.</p>
-              </a>
-              <a href="/settings" class="block rounded-lg p-6 text-lg font-semibold leading-7 text-white bg-blue-400 hover:bg-blue-500 transition duration-200 shadow-md transform hover:scale-105">
-                <h3 class="text-2xl">Settings</h3>
-                <p class="mt-2 text-gray-100">Customize your testing parameters and preferences.</p>
-              </a>
-              <a href="/history" class="block rounded-lg p-6 text-lg font-semibold leading-7 text-white bg-blue-400 hover:bg-blue-500 transition duration-200 shadow-md transform hover:scale-105">
-                <h3 class="text-2xl">History</h3>
-                <p class="mt-2 text-gray-100">View past test results and analytics.</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </main>
-  
-      <footer class="bg-gray-200 py-6">
-        <div class="text-center">
-          <p class="text-gray-600">&copy; 2024 Your Company. All rights reserved.</p>
-        </div>
-      </footer>
+      </div>
+    </nav>
+
+    <div class="container mx-auto p-6">
+      <SimulationControls 
+        :frequency="frequency" 
+        @updateFrequency="updateFrequency" 
+        :amplitude="amplitude" 
+        @updateAmplitude="updateAmplitude"
+        :duration="duration"
+        @updateDuration="updateDuration"
+      />
+
+      <WaveformDisplay ref="waveformRef" />
+
+      <RecentTests :tests="recentTests" />
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        message: 'Hello Vue!' // This is the message you want to display
-      };
+  </div>
+</template>
+
+<script>
+import SimulationControls from './SimulationControls.vue';
+import WaveformDisplay from './WaveformDisplay.vue';
+import RecentTests from './RecentTests.vue';
+
+export default {
+  components: {
+    SimulationControls,
+    WaveformDisplay,
+    RecentTests
+  },
+  data() {
+    return {
+      frequency: 30,
+      amplitude: 30,
+      duration: 60,
+      recentTests: [
+        { id: '#001', batteryType: '12N12', status: 'Completed', duration: '2 hrs', statusColor: 'text-green-400' },
+        { id: '#002', batteryType: '12N12-3B', status: 'In Progress', duration: '1 hr', statusColor: 'text-yellow-400' },
+        { id: '#003', batteryType: '12N12', status: 'Error', duration: '30 mins', statusColor: 'text-red-400' },
+      ]
+    };
+  },
+  methods: {
+    updateFrequency(newFrequency) {
+      this.frequency = newFrequency;
+      this.$refs.waveformRef.updateFrequency(newFrequency);
+    },
+    updateAmplitude(newAmplitude) {
+      this.amplitude = newAmplitude;
+    },
+    updateDuration(newDuration) {
+      this.duration = newDuration;
     }
   }
-  </script>
-  
-  <style scoped>
-  /* Additional scoped CSS styles for enhancements */
-  .header-bg {
-    background: linear-gradient(to right, #3B82F6, #2563EB);
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+/* Add any additional styles here */
+</style>

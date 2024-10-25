@@ -10,10 +10,11 @@ class CreateMeasurementsTable extends Migration
     {
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
-            $table->float('amplitude'); // Amplitude column
-            $table->float('frequency'); // Frequency column
-            $table->float('acceleration'); // Acceleration column
+            $table->integer('frequency'); // Frequency column
+            $table->float('intensity'); // Intensity column
+            $table->float('vibrationLevel'); // Vibration Level column
             $table->integer('duration'); // Duration column
+            $table->string('dataPoint'); // Data Point column
             $table->timestamps(); // Timestamps
         });
     }

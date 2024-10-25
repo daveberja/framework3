@@ -20,9 +20,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/simulation', function () {
-    return Inertia::render('Simulation');
-})->name('simulation');
+
+
+Route::get('/reports', function () {
+    return Inertia::render('reports');
+})->name('reports');
 
 Route::get('/history', function () {
     return Inertia::render('History');

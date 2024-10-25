@@ -10,16 +10,19 @@ class CreateSimulationsTable extends Migration
     {
         Schema::create('simulations', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('startTime');
-            $table->timestamp('endTime');
-            $table->integer('frequency');
+            $table->dateTime('startTime');
+            $table->dateTime('endTime');
+            $table->float('frequency');
             $table->float('amplitude');
             $table->float('acceleration');
             $table->integer('duration');
             $table->string('batteryName');
+            $table->string('dataPoint'); // Add this line if it doesn't exist
+            // Add any other fields you need
             $table->timestamps();
         });
     }
+    
 
     public function down()
     {
