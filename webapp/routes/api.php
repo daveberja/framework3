@@ -1,3 +1,4 @@
-use App\Http\Controllers\SimulationController;
+<?php
+use App\Http\Controllers\ReportController;
 
-Route::get('/past-simulations', [SimulationController::class, 'index']);
+Route::get('/simulation-results', [ReportController::class, 'getSimulationResults']);
