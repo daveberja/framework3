@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports', function () {
         return Inertia::render('reports');
     })->name('reports');
+    Route::get('/settings', function () {
+        return Inertia::render('Settings');
+    })->name('reports');
 
     // Profile Management Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
