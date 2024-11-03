@@ -16,5 +16,8 @@ export default defineConfig({
                 },
             },
         }),
+        
     ],
+    base: '/public/build/', // Use full path from Hostinger's root
+
 });
